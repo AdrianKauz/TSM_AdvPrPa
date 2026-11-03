@@ -81,6 +81,144 @@ svc #0x80
 
 ```
 
+## 1.6 Procedural Programming
+- Organize code in **procedures**, also called as **functions** or **subroutines**
+    - Names
+    - Parameter types
+    - Return type
+- **Control flow** within and between procedures is expressed through control structures
+    - if / then / else
+    - while / for
+- Example languages:  Pascal, C, Fortran
+
+## 1.6.1 Example
+pascal
+```pascal
+program SumNumbers;
+
+function Sum(n: integer): integer;
+var
+  i, total: integer;
+begin
+  total := 0;
+  i := n;
+  while i > 0 do
+  begin
+    total := total + i;
+    i := i - 1;
+  end;
+  Sum := total;
+end;
+
+var
+  res: integer;
+begin
+  res := Sum(10);
+  writeln('Sum: ', res);
+end.
+```
+
+## 1.7 Object-Oriented Programming
+> _"I thought of objects being like biological cells and/or individual computers on a network, only able to communicate with messages."_
+> Alan Key
+
+- Organize **data** together with **code**
+    - Objects with fields/attributes and methods
+- Support for abstraction and modularization
+    - Abstract data types, Information hiding
+- Concepts:
+    - Objects and messages (receiver)
+    - Classes as a blueprint for objects and prototypes
+    - Polymorphism, dynamic dispatch
+    - Inheritancee for code reuse
+- **Imperative in its core**
+- Example languages: Simula, Smalltalk, Java, C#, C++
+
+### 1.7.1 Example
+Kotlin
+```kotlin
+class Dog(val name: String) {
+    fun bark() {
+        println("$name says: Woof!")
+    }
+}
+
+class Person {
+    fun pet(dog: Dog) {
+        println("Petting ${dog.name}...")
+        dog.bark()
+    }
+}
+
+fun main() {
+    val myDog = Dog("Rex")
+    val person = Person()
+    person.pet(myDog)
+}
+```
+
+## 1.8 Declarative Programming
+- **Express the logic of a computation without describing its control flow.**
+- Describe **what** the program must accomplish in terms of the problem domain, **not how** to accomplish it.
+- The language implementation figures out the best way to perform the computation.
+- **Higher-level** languages, often based on theories of formal logic using deduction as computation.
+- Sub paradigms:
+    - Domain-specific languages
+    - Logic programming
+    - Functional Programming
+
+## 1.9 Structured Query Language (SQL)
+- Domain specific language to query databases
+- A query defines what to find in a database, implementation decides how to retrieve the result.
+- Theoretical foundation: Relational algebra
+
+### 1.9.1 Example
+```sql
+SELECT DISTINCT l.name FROM Languages l
+JOIN langConcepts lc ON lc.l_id = l.id JOIN Concepts c ON c.id = lc.c_id
+WHERE c.`desc` LIKE '%lambda%' ORDER BY l.name;
+```
+
+## 1.10 Logic Programming
+- Prolog is short for “programming in logic”
+- Theoretical foundation: First-order logic (predicate logic)
+
+### 1.10.1 A program consists of...
+#### 1.10.1.1 Facts
+`fact :- true`
+```prolog
+ancestor(pascal,java).
+ancestor(java,kotlin).
+ancestor(java,scala).
+```
+- In this case: `ancestor(pascal, java)` is a **compound term** (structure) with functor `ancestor` and arity 2, written `ancestor/2`.
+- With the terminating period it is a **fact**: a clause with no body, unconditionally true.
+- Reading: “pascal is an ancestor of java”. Argument order has no built-in meaning in Prolog; it is a convention you define, here `ancestor(Ancestor, Descendant)`.
+
+#### 1.10.1.2 Rules
+`head :- body` means `head <- body` (head is true if body is true)
+```prolog
+influenced(A,B) := ancestor(A,B).
+% influenced(A,B) <- ancestor(A,B)
+
+influenced(A,B) := ancestor(A,TMP), influenced(TMP,B).
+% influenced(A,B) <- ancestor(A,Tmp) ∧ influenced(Tmp,B)
+```
+The rules define the **transitive closure** of `ancestor/2`: 
+-	A influenced B if A is a direct ancestor of B…
+-	…or if A is an ancestor of some TMP that (transitively) influenced B.
+Clause 1 is the **base case**, clause 2 the **recursive case**. 
+
+#### 1.10.1.3 Queries
+To run a program, we ask questions about a database with a query
+```prolog
+?- influenced(pascal,X).
+```
+`X` is **unbound** and gets bound by unification. This is the difference from assignment: **Prolog does not “return” values**, it finds variable bindings that make the goal true.
+The order of solutions follows the clause order in the program (having the base case first means direct influences come before indirect ones).
+
+
+
 
 
 
