@@ -187,9 +187,9 @@ WHERE c.`desc` LIKE '%lambda%' ORDER BY l.name;
 #### 1.10.1.1 Facts
 `fact :- true`
 ```prolog
-ancestor(pascal,java).
-ancestor(java,kotlin).
-ancestor(java,scala).
+ancestor(pascal, java).
+ancestor(java, kotlin).
+ancestor(java, scala).
 ```
 - In this case: `ancestor(pascal, java)` is a **compound term** (structure) with functor `ancestor` and arity 2, written `ancestor/2`.
 - With the terminating period it is a **fact**: a clause with no body, unconditionally true.
@@ -198,11 +198,11 @@ ancestor(java,scala).
 #### 1.10.1.2 Rules
 `head :- body` means `head <- body` (head is true if body is true)
 ```prolog
-influenced(A,B) := ancestor(A,B).
-% influenced(A,B) <- ancestor(A,B)
+influenced(A, B) := ancestor(A, B).
+% influenced(A, B) <- ancestor(A, B)
 
-influenced(A,B) := ancestor(A,TMP), influenced(TMP,B).
-% influenced(A,B) <- ancestor(A,Tmp) ∧ influenced(Tmp,B)
+influenced(A, B) := ancestor(A, TMP), influenced(TMP, B).
+% influenced(A, B) <- ancestor(A, Tmp) ∧ influenced(Tmp, B)
 ```
 The rules define `influenced/2` as the **transitive closure** of `ancestor/2`: 
 -	A influenced B if A is a direct ancestor of B (clause 1, base case)…
