@@ -204,10 +204,9 @@ influenced(A,B) := ancestor(A,B).
 influenced(A,B) := ancestor(A,TMP), influenced(TMP,B).
 % influenced(A,B) <- ancestor(A,Tmp) ∧ influenced(Tmp,B)
 ```
-The rules define the **transitive closure** of `ancestor/2`: 
--	A influenced B if A is a direct ancestor of B…
--	…or if A is an ancestor of some TMP that (transitively) influenced B.
-Clause 1 is the **base case**, clause 2 the **recursive case**. 
+The rules define `influenced/2` as the **transitive closure** of `ancestor/2`: 
+-	A influenced B if A is a direct ancestor of B (clause 1, base case)…
+-	…or if A is an ancestor of some TMP that (transitively) influenced B. (clause 2, recursive case)
 
 #### 1.10.1.3 Queries
 To run a program, we ask questions about a database with a query
