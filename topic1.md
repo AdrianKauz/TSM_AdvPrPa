@@ -198,11 +198,11 @@ ancestor(java, scala).
 #### 1.10.1.2 Rules
 `head :- body` means `head <- body` (head is true if body is true)
 ```prolog
-influenced(A, B) := ancestor(A, B).
+influenced(A, B) :- ancestor(A, B).
 % influenced(A, B) <- ancestor(A, B)
 
-influenced(A, B) := ancestor(A, TMP), influenced(TMP, B).
-% influenced(A, B) <- ancestor(A, Tmp) ∧ influenced(Tmp, B)
+influenced(A, B) :- ancestor(A, TMP), influenced(TMP, B).
+% influenced(A, B) <- ancestor(A, TMP) ∧ influenced(TMP, B)
 ```
 The rules define `influenced/2` as the **transitive closure** of `ancestor/2`: 
 -	A influenced B if A is a direct ancestor of B (clause 1, base case)…
@@ -212,6 +212,9 @@ The rules define `influenced/2` as the **transitive closure** of `ancestor/2`:
 To run a program, we ask questions about a database with a query
 ```prolog
 ?- influenced(pascal,X).
+X = java ;
+X = kotlin ;
+X = scala.
 ```
 `X` is **unbound** and gets bound by unification. This is the difference from assignment: **Prolog does not “return” values**, it finds variable bindings that make the goal true.
 The order of solutions follows the clause order in the program (having the base case first means direct influences come before indirect ones).
